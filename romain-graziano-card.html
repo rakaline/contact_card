@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romain GRAZIANO — RAKALINE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0a0a0f;
+  --card:#111118;
+  --gold:#c9a84c;
+  --gold-light:#e8d48b;
+  --text:#f0ede6;
+  --muted:#8a8794;
+  --accent:#1e1e2e;
+}
+
+html{font-size:16px}
+body{
+  min-height:100dvh;
+  font-family:'Outfit',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  overflow-x:hidden;
+}
+
+/* Animated background grain */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+/* Subtle radial glow */
+body::after{
+  content:'';
+  position:fixed;
+  top:-30%;left:50%;
+  width:600px;height:600px;
+  transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+.card{
+  position:relative;z-index:1;
+  width:100%;max-width:420px;
+  background:var(--card);
+  border-radius:24px;
+  border:1px solid rgba(201,168,76,0.15);
+  overflow:hidden;
+  animation:cardIn 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
+  opacity:0;
+  transform:translateY(30px);
+}
+
+@keyframes cardIn{
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Gold accent line at top */
+.card::before{
+  content:'';display:block;
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* Header section */
+.header{
+  padding:40px 32px 24px;
+  text-align:center;
+  position:relative;
+}
+
+/* Monogram circle */
+.monogram{
+  width:80px;height:80px;
+  margin:0 auto 20px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#8b6914);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:28px;font-weight:900;
+  color:var(--bg);
+  letter-spacing:-1px;
+  box-shadow:0 8px 32px rgba(201,168,76,0.25);
+  animation:monogramIn 0.6s 0.3s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes monogramIn{
+  from{transform:scale(0.5);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.name{
+  font-family:'Playfair Display',serif;
+  font-size:1.75rem;
+  font-weight:700;
+  letter-spacing:0.02em;
+  margin-bottom:4px;
+  animation:fadeUp 0.5s 0.4s both;
+}
+
+.company{
+  font-size:0.85rem;
+  font-weight:500;
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:4px;
+  animation:fadeUp 0.5s 0.5s both;
+}
+
+.title{
+  font-size:0.85rem;
+  color:var(--muted);
+  font-weight:300;
+  animation:fadeUp 0.5s 0.55s both;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Divider */
+.divider{
+  height:1px;
+  margin:0 32px;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,0.2),transparent);
+}
+
+/* Contact info */
+.info{
+  padding:24px 32px 28px;
+}
+
+.info-item{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  text-decoration:none;
+  color:var(--text);
+  transition:all 0.3s ease;
+  cursor:pointer;
+  animation:fadeUp 0.5s calc(0.6s + var(--i,0) * 0.08s) both;
+}
+
+.info-item:last-child{border-bottom:none}
+
+.info-item:hover{
+  padding-left:6px;
+}
+
+.info-item:hover .icon{
+  background:var(--gold);
+  color:var(--bg);
+  box-shadow:0 4px 16px rgba(201,168,76,0.3);
+}
+
+.icon{
+  width:40px;height:40px;
+  flex-shrink:0;
+  border-radius:12px;
+  background:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s ease;
+}
+
+.icon svg{
+  width:18px;height:18px;
+  stroke:var(--gold);
+  stroke-width:1.8;
+  fill:none;
+  transition:stroke 0.3s;
+}
+
+.info-item:hover .icon svg{stroke:var(--bg)}
+
+.info-label{
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:0.12em;
+  color:var(--muted);
+  margin-bottom:2px;
+}
+
+.info-value{
+  font-size:0.95rem;
+  font-weight:400;
+}
+
+/* Action buttons */
+.actions{
+  padding:0 32px 32px;
+  display:flex;gap:10px;
+  animation:fadeUp 0.5s 1s both;
+}
+
+.btn{
+  flex:1;
+  padding:14px 10px;
+  border:none;
+  border-radius:14px;
+  font-family:'Outfit',sans-serif;
+  font-size:0.82rem;
+  font-weight:500;
+  letter-spacing:0.04em;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  text-decoration:none;
+  text-align:center;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),#8b6914);
+  color:var(--bg);
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(201,168,76,0.35);
+}
+
+.btn-secondary{
+  background:var(--accent);
+  color:var(--text);
+  border:1px solid rgba(201,168,76,0.15);
+}
+.btn-secondary:hover{
+  border-color:var(--gold);
+  transform:translateY(-2px);
+}
+
+.btn svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none}
+
+/* Footer */
+.footer{
+  text-align:center;
+  padding:0 32px 24px;
+  font-size:0.65rem;
+  color:rgba(255,255,255,0.15);
+  letter-spacing:0.1em;
+  animation:fadeUp 0.5s 1.1s both;
+}
+
+/* Mobile */
+@media(max-width:440px){
+  body{padding:12px}
+  .card{border-radius:20px}
+  .header{padding:32px 24px 20px}
+  .info{padding:20px 24px 24px}
+  .actions{padding:0 24px 24px}
+  .name{font-size:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <div class="monogram">RG</div>
+    <div class="name">Romain Graziano</div>
+    <div class="company">RAKALINE</div>
+    <div class="title">Président</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="info">
+    <a href="tel:+33619547338" class="info-item" style="--i:0">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <div>
+        <div class="info-label">Téléphone</div>
+        <div class="info-value">06 19 54 73 38</div>
+      </div>
+    </a>
+
+    <a href="mailto:graziano.romain@rakaline.com" class="info-item" style="--i:1">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div>
+        <div class="info-label">Email</div>
+        <div class="info-value">graziano.romain@rakaline.com</div>
+      </div>
+    </a>
+
+    <a href="https://maps.google.com/?q=26+RUE+LOUIS+AMPERE+93330+NEUILLY-SUR-MARNE" target="_blank" class="info-item" style="--i:2">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div>
+        <div class="info-label">Adresse</div>
+        <div class="info-value">26 Rue Louis Ampère<br>93330 Neuilly-sur-Marne</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="actions">
+    <a href="tel:+33619547338" class="btn btn-primary">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Appeler
+    </a>
+    <a id="vcardBtn" class="btn btn-secondary" download="Romain_Graziano.vcf">
+      <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      Enregistrer
+    </a>
+  </div>
+
+  <div class="footer">RAKALINE © 2025</div>
+</div>
+
+<script>
+// Generate vCard download
+const vcard = `BEGIN:VCARD
+VERSION:3.0
+N:GRAZIANO;Romain;;;
+FN:Romain GRAZIANO
+ORG:RAKALINE
+TITLE:Président
+TEL;TYPE=CELL:+33619547338
+EMAIL:graziano.romain@rakaline.com
+ADR;TYPE=WORK:;;26 RUE LOUIS AMPERE;NEUILLY-SUR-MARNE;;93330;France
+END:VCARD`;
+
+const blob = new Blob([vcard], {type: 'text/vcard'});
+document.getElementById('vcardBtn').href = URL.createObjectURL(blob);
+</script>
+</body>
+</html>
